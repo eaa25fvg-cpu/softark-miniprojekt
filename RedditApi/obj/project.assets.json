@@ -3543,24 +3543,26 @@
     ]
   },
   "packageFolders": {
-    "/Users/frederikgjortz/.nuget/packages/": {}
+    "C:\\Users\\mathi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/frederikgjortz/src/studie/3-semester/softwarearkitektur/softark-miniprojekt/RedditApi/RedditApi.csproj",
+      "projectUniqueName": "C:\\Users\\mathi\\RiderProjects\\softark-miniprojekt\\RedditApi\\RedditApi.csproj",
       "projectName": "RedditApi",
-      "projectPath": "/Users/frederikgjortz/src/studie/3-semester/softwarearkitektur/softark-miniprojekt/RedditApi/RedditApi.csproj",
-      "packagesPath": "/Users/frederikgjortz/.nuget/packages/",
-      "outputPath": "/Users/frederikgjortz/src/studie/3-semester/softwarearkitektur/softark-miniprojekt/RedditApi/obj/",
+      "projectPath": "C:\\Users\\mathi\\RiderProjects\\softark-miniprojekt\\RedditApi\\RedditApi.csproj",
+      "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mathi\\RiderProjects\\softark-miniprojekt\\RedditApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/frederikgjortz/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\mathi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3579,7 +3581,7 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.200"
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net10.0": {
@@ -3627,7 +3629,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/10.0.203/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.AspNetCore": "(,10.0.32767]",
           "Microsoft.AspNetCore.Antiforgery": "(,10.0.32767]",
