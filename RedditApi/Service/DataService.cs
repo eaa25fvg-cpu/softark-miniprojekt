@@ -48,7 +48,7 @@ public class DataService
         if (post is null)
             return null;
 
-        post.Downvotes -= 1;
+        post.Downvotes += 1;
 
         db.SaveChanges();
 
@@ -78,7 +78,7 @@ public class DataService
         if (comment is null)
             return null;
 
-        comment.Downvotes -= 1;
+        comment.Downvotes += 1;
 
         db.SaveChanges();
 
@@ -102,11 +102,12 @@ public class DataService
         Post post = db.Posts.FirstOrDefault()!;
         if (post == null)
         {
-            db.Posts.Add(new Post
+            post = new Post
             {
                 Title = "Harry Potter", Content = "Harry potter er en god filmserie", User = user,
                 Downvotes = 10, Upvotes = 1
-            });
+            };
+            db.Posts.Add(post);
             db.Posts.Add(new Post
             {
                 Title = "Ringenes Herre", Content = "Ringenes Herre ved jeg ikke hvad er", User = user,
@@ -138,5 +139,7 @@ public class DataService
                 Downvotes = 10, Upvotes = 1, Post = post
             });
         }
+        
+        db.SaveChanges();
     }
 }
