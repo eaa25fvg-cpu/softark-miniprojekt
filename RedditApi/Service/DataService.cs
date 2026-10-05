@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using shared.Model;
 
 using Data;
 using shared.Model;
@@ -14,6 +15,74 @@ public class DataService
     public DataService(PostContext db)
     {
         this.db = db;
+    }
+
+    public List<Post> GetPosts()
+    {
+        return db.Posts.Include(c => c.Comments).ToList();
+    }
+
+    public Post GetPost(int id)
+    {
+        return db.Posts.Include(c => c.Comments).FirstOrDefault(p => p.Id == id);
+    }
+
+    public Post UpvotePost(int id)
+    {
+        Post post = db.Posts.FirstOrDefault(p => p.Id == id);
+        
+        if (post is null)
+            return null;
+
+        post.Upvotes += 1;
+
+        db.SaveChanges();
+
+        return post;
+    }
+    
+    public Post DownvotePost(int id)
+    {
+        Post post = db.Posts.FirstOrDefault(p => p.Id == id);
+        
+        if (post is null)
+            return null;
+
+        post.Downvotes -= 1;
+
+        db.SaveChanges();
+
+        return post;
+    }
+    
+    public Comment UpvoteComment(int postid, int commentid)
+    {
+        Post post = db.Posts.Include(p => p.Comments).FirstOrDefault(p => p.Id == postid);
+        Comment comment = post.Comments.FirstOrDefault(c => c.Id == commentid);
+        
+        if (comment is null)
+            return null;
+
+        comment.Upvotes += 1;
+
+        db.SaveChanges();
+
+        return comment;
+    }
+    
+    public Comment DownvoteComment(int postid, int commentid)
+    {
+        Post post = db.Posts.Include(p => p.Comments).FirstOrDefault(p => p.Id == postid);
+        Comment comment = post.Comments.FirstOrDefault(c => c.Id == commentid);
+        
+        if (comment is null)
+            return null;
+
+        comment.Downvotes -= 1;
+
+        db.SaveChanges();
+
+        return comment;
     }
 
     public void SeedData()
