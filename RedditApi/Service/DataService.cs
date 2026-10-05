@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
 using Data;
-using Model;
+using shared.Model;
 
 namespace Service;
 
@@ -24,10 +24,10 @@ public class DataService
         // user.Posts.Add(new Post { Title = "??", User = user });
         if (user == null)
         {
-            user = new User { Name = "Kristian" };
+            user = new User { Username = "Kristian" };
             db.Users.Add(user);
-            db.Users.Add(new User { Name = "Søren" });
-            db.Users.Add(new User { Name = "Mette" });
+            db.Users.Add(new User { Username = "Søren" });
+            db.Users.Add(new User { Username = "Mette" });
         }
 
         Post post = db.Posts.FirstOrDefault()!;
@@ -35,17 +35,17 @@ public class DataService
         {
             db.Posts.Add(new Post
             {
-                Title = "Harry Potter", Text = "Harry potter er en god filmserie", User = user,
+                Title = "Harry Potter", Content = "Harry potter er en god filmserie", User = user,
                 Downvotes = 10, Upvotes = 1
             });
             db.Posts.Add(new Post
             {
-                Title = "Ringenes Herre", Text = "Ringenes Herre ved jeg ikke hvad er", User = user,
+                Title = "Ringenes Herre", Content = "Ringenes Herre ved jeg ikke hvad er", User = user,
                 Downvotes = 10, Upvotes = 1
             });
             db.Posts.Add(new Post
             {
-                Title = "True detective", Text = "Bedste sæson TV nogensinde", User = user, 
+                Title = "True detective", Content = "Bedste sæson TV nogensinde", User = user, 
                 Downvotes = 10, Upvotes = 1
             });
         }
@@ -55,17 +55,17 @@ public class DataService
         {
             db.Comments.Add(new Comment
             {
-                Text = "Dette er en kommentar", User = user, 
+                Content = "Dette er en kommentar", User = user, 
                 Downvotes = 10, Upvotes = 1, Post = post
             });
             db.Comments.Add(new Comment
             {
-                Text = "I like big men", User = user, 
+                Content = "I like big men", User = user, 
                 Downvotes = 10, Upvotes = 1, Post = post
             });
             db.Comments.Add(new Comment
             {
-                Text = "Waddup", User = user, 
+                Content = "Waddup", User = user, 
                 Downvotes = 10, Upvotes = 1, Post = post
             });
         }

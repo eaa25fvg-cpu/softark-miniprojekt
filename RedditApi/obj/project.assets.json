@@ -1307,6 +1307,16 @@
         "build": {
           "buildTransitive/net8.0/_._": {}
         }
+      },
+      "shared/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v9.0",
+        "compile": {
+          "bin/placeholder/shared.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/shared.dll": {}
+        }
       }
     }
   },
@@ -3531,6 +3541,11 @@
         "system.security.cryptography.protecteddata.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "shared/1.0.0": {
+      "type": "project",
+      "path": "../shared/shared.csproj",
+      "msbuildProject": "../shared/shared.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -3539,7 +3554,8 @@
       "Microsoft.AspNetCore.OpenApi >= 10.0.7",
       "Microsoft.EntityFrameworkCore.Design >= 10.0.8",
       "Microsoft.EntityFrameworkCore.SqlServer >= 10.0.12",
-      "Microsoft.EntityFrameworkCore.Sqlite >= 10.0.8"
+      "Microsoft.EntityFrameworkCore.Sqlite >= 10.0.8",
+      "shared >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -3568,7 +3584,11 @@
       "frameworks": {
         "net10.0": {
           "targetAlias": "net10.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\mathi\\RiderProjects\\softark-miniprojekt\\shared\\shared.csproj": {
+              "projectPath": "C:\\Users\\mathi\\RiderProjects\\softark-miniprojekt\\shared\\shared.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

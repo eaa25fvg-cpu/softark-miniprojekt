@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "kreddit-app", "kreddit-app.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shared", "..\shared\shared.csproj", "{6311C115-D585-51B9-BEA0-07373A03268A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedditApi", "..\RedditApi\RedditApi.csproj", "{8BCABAA4-749E-4A8F-A8A6-7D94EAB85F98}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6311C115-D585-51B9-BEA0-07373A03268A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6311C115-D585-51B9-BEA0-07373A03268A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6311C115-D585-51B9-BEA0-07373A03268A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BCABAA4-749E-4A8F-A8A6-7D94EAB85F98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BCABAA4-749E-4A8F-A8A6-7D94EAB85F98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BCABAA4-749E-4A8F-A8A6-7D94EAB85F98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BCABAA4-749E-4A8F-A8A6-7D94EAB85F98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
