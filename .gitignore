@@ -3,3 +3,5 @@ obj/
 *.db
 .vs/
 .idea/
+*.db-wal
+*.db-shm

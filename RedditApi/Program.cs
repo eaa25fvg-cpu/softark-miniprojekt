@@ -20,6 +20,9 @@ app.UseCors();
 
 using (var scope = app.Services.CreateScope())
 {
+    var db = scope.ServiceProvider.GetRequiredService<PostContext>();
+    db.Database.Migrate(); // Opretter/opdaterer databasen ud fra migrations.
+
     var dataService = scope.ServiceProvider.GetRequiredService<DataService>();
     dataService.SeedData(); // Fylder data på, hvis databasen er tom. Ellers ikke.
 }
