@@ -16,7 +16,8 @@ else
     <table>
         <tr>
             <th>Title</th>
-            <th>Content</th>
+            <th>Author</th>
+            <th>Date</th>
             <th colspan="3">Votes</th>
         </tr>
         @foreach (var post in posts)
@@ -27,7 +28,8 @@ else
                     The route is defined as "/post/{id}" and the id is the post id.
                 -->
                 <td><a href="/post/@post.Id">@post.Title</a></td>
-                <td>@post.Content</td>
+                <td>@post.User?.Username</td>
+                <td>@post.CreatedAt.ToString("dd-MM-yyyy HH:mm")</td>
                 <td>@(post.Upvotes - post.Downvotes)</td>
                 <td><button @onclick="() => Upvote(post.Id)">Upvote</button></td>
                 <td><button @onclick="() => Downvote(post.Id)">Downvote</button></td>
@@ -40,20 +42,27 @@ else
 
 @code {
     private Post[]? posts;
-    private Post? votePost;
 
     protected override async Task OnInitializedAsync()
     {
         posts = await apiService.GetPosts();
     }
 
-    private async void Upvote(int id)
+    private async Task Upvote(int id)
     {
-        var updatedPost = await apiService.UpvotePost(id);
+        UpdateVotes(await apiService.UpvotePost(id));
     }
 
-    private async void Downvote(int id)
+    private async Task Downvote(int id)
     {
-        Console.WriteLine("Not implemented 😪");
+        UpdateVotes(await apiService.DownvotePost(id));
+    }
+
+    private void UpdateVotes(Post? updatedPost)
+    {
+        var post = posts?.FirstOrDefault(p => p.Id == updatedPost?.Id);
+        if (post == null) return;
+        post.Upvotes = updatedPost!.Upvotes;
+        post.Downvotes = updatedPost.Downvotes;
     }
 }

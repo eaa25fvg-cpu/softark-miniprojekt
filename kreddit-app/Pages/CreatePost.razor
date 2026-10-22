@@ -1,0 +1,59 @@
+@page "/create"
+
+@using kreddit_app.Data;
+@inject ApiService apiService
+@inject NavigationManager navigation
+
+<PageTitle>Kreddit - Ny tråd</PageTitle>
+
+<h1>Opret ny tråd</h1>
+
+<div>
+    <p><input placeholder="Overskrift" @bind-value="title"/></p>
+    <p><input placeholder="Dit navn" @bind-value="author"/></p>
+    <p>
+        <label><input type="radio" name="type" checked="@(!isLink)" @onchange="() => isLink = false"/> Tekst</label>
+        <label><input type="radio" name="type" checked="@isLink" @onchange="() => isLink = true"/> Link</label>
+    </p>
+    @if (isLink)
+    {
+        <p><input placeholder="https://..." @bind-value="url"/></p>
+    }
+    else
+    {
+        <p><textarea placeholder="Tekst" rows="5" cols="60" @bind="content"></textarea></p>
+    }
+    <button type="button" @onclick="Create">Opret tråd</button>
+    @if (error != null)
+    {
+        <p style="color: red">@error</p>
+    }
+</div>
+
+@code {
+    private string? title;
+    private string? author;
+    private string? content;
+    private string? url;
+    private bool isLink;
+    private string? error;
+
+    private async Task Create()
+    {
+        string? body = isLink ? url : content;
+        if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(author) || string.IsNullOrWhiteSpace(body))
+        {
+            error = "Udfyld overskrift, navn og tekst/link.";
+            return;
+        }
+
+        var post = await apiService.CreatePost(title, isLink ? null : content, isLink ? url : null, author);
+        if (post == null)
+        {
+            error = "Tråden kunne ikke oprettes.";
+            return;
+        }
+
+        navigation.NavigateTo($"/post/{post.Id}");
+    }
+}

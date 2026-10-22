@@ -19,12 +19,19 @@ public class DataService
 
     public List<Post> GetPosts()
     {
-        return db.Posts.Include(c => c.Comments).ToList();
+        return db.Posts
+            .Include(p => p.User)
+            .Include(p => p.Comments).ThenInclude(c => c.User)
+            .OrderByDescending(p => p.CreatedAt)
+            .ToList();
     }
 
     public Post GetPost(int id)
     {
-        return db.Posts.Include(c => c.Comments).FirstOrDefault(p => p.Id == id);
+        return db.Posts
+            .Include(p => p.User)
+            .Include(p => p.Comments).ThenInclude(c => c.User)
+            .FirstOrDefault(p => p.Id == id);
     }
 
     public Post UpvotePost(int id)
@@ -57,8 +64,7 @@ public class DataService
     
     public Comment UpvoteComment(int postid, int commentid)
     {
-        Post post = db.Posts.Include(p => p.Comments).FirstOrDefault(p => p.Id == postid);
-        Comment comment = post.Comments.FirstOrDefault(c => c.Id == commentid);
+        Comment comment = db.Comments.FirstOrDefault(c => c.Id == commentid && c.Post.Id == postid);
         
         if (comment is null)
             return null;
@@ -72,13 +78,63 @@ public class DataService
     
     public Comment DownvoteComment(int postid, int commentid)
     {
-        Post post = db.Posts.Include(p => p.Comments).FirstOrDefault(p => p.Id == postid);
-        Comment comment = post.Comments.FirstOrDefault(c => c.Id == commentid);
+        Comment comment = db.Comments.FirstOrDefault(c => c.Id == commentid && c.Post.Id == postid);
         
         if (comment is null)
             return null;
 
         comment.Downvotes += 1;
+
+        db.SaveChanges();
+
+        return comment;
+    }
+
+    // Finder brugeren ud fra navnet, eller opretter en ny hvis den ikke findes.
+    private User GetOrCreateUser(string username)
+    {
+        User user = db.Users.FirstOrDefault(u => u.Username == username);
+
+        if (user is null)
+        {
+            user = new User(username);
+            db.Users.Add(user);
+        }
+
+        return user;
+    }
+
+    public Post CreatePost(string title, string content, string url, string author)
+    {
+        if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(author))
+            return null;
+
+        // En tråd er enten et link eller tekst
+        if (string.IsNullOrWhiteSpace(url) == string.IsNullOrWhiteSpace(content))
+            return null;
+
+        User user = GetOrCreateUser(author);
+
+        Post post = new Post(user, title, content ?? "", string.IsNullOrWhiteSpace(url) ? null : url);
+        db.Posts.Add(post);
+
+        db.SaveChanges();
+
+        return post;
+    }
+
+    public Comment CreateComment(int postId, string content, string author)
+    {
+        Post post = db.Posts.FirstOrDefault(p => p.Id == postId);
+
+        if (post is null || string.IsNullOrWhiteSpace(content) || string.IsNullOrWhiteSpace(author))
+            return null;
+
+        User user = GetOrCreateUser(author);
+
+        Comment comment = new Comment(content, user: user);
+        comment.Post = post;
+        db.Comments.Add(comment);
 
         db.SaveChanges();
 

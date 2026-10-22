@@ -6,12 +6,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 builder.Services.AddScoped<DataService>();
+builder.Services.AddCors(options =>
+    options.AddDefaultPolicy(policy =>
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
 builder.Services.AddDbContext<PostContext>(options =>
     options.UseSqlite(
         builder.Configuration.GetConnectionString("ContextSQLite")));
 
 var app = builder.Build();
+
+app.UseCors();
 
 using (var scope = app.Services.CreateScope())
 {
@@ -48,7 +53,17 @@ app.MapPut("/api/posts/{postid}/comments/{commentid}/downvote", (DataService Ser
     return Service.DownvoteComment(postid, commentid);
 });
 
-app.MapPost("api/posts", (DataService Service) => { });
-app.MapPost("api/posts/{id}/comments", (DataService Service, int id) => { });
+app.MapPost("/api/posts", (DataService Service, NewPostData data) =>
+{
+    return Service.CreatePost(data.Title, data.Content, data.Url, data.Author);
+});
+
+app.MapPost("/api/posts/{id}/comments", (DataService Service, int id, NewCommentData data) =>
+{
+    return Service.CreateComment(id, data.Content, data.Author);
+});
 
 app.Run();
+
+record NewPostData(string Title, string? Content, string? Url, string Author);
+record NewCommentData(string Content, string Author);
